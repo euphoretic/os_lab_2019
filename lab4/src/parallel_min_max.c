@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 #include <string.h>
 
 #include <signal.h>
@@ -18,9 +19,10 @@
 #include "utils.h"
 int*  PID_id;
 int pnum;
+int i=0;
 void kill_all(int sig)
 {
-  for (int i=0;i<pnum;i++)
+  for (i=0;i<pnum;i++)
   {
     kill(PID_id[i], SIGKILL);
   }
