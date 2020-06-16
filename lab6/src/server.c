@@ -14,7 +14,7 @@
 
 #include "pthread.h"
 
-
+#include "libMultModulo.h"
 
 struct FactorialArgs {
   uint64_t begin;
@@ -206,7 +206,11 @@ int main(int argc, char **argv)
       uint64_t total = 1;
       for (uint32_t i = 0; i < tnum; i++)
       {
-
+        pthread_mutex_lock(&mut);
+        uint64_t result = 0;
+        pthread_join(threads[i], (void **)&result);
+        total =  MultModulo(total, result, mod);
+        pthread_mutex_unlock(&mut);
       }
 
       fprintf("Total: %llu\n", total);

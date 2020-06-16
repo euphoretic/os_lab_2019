@@ -14,7 +14,7 @@
 
 #include <pthread.h>
 
-
+#include "libMultModulo.h"
 
 pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;
 
@@ -227,7 +227,11 @@ int main(int argc, char **argv)
 
   for (uint64_t i = 0; i <servers_num; i++)
   {
-
+    pthread_mutex_lock(&mut);
+    int between_answer=0;
+    pthread_join(threads[i],(void**)&between_answer);
+    answer =  MultModulo(answer, between_answer, mod);
+    pthread_mutex_unlock(&mut);
   }
 
   printf("answer: %llu\n", answer);
